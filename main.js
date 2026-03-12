@@ -9,12 +9,14 @@ const client = new Client({
     headless: true,
     executablePath: puppeteer.executablePath(), // uses bundled Chromium
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      dumpio: true
   },
 });
 
-client.on('ready', () => {
-    console.log('Client is ready!');
-});
+client.on('disconnected', reason => console.log('Client disconnected:', reason));
+client.on('auth_failure', msg => console.log('Auth failure:', msg));
+client.on('ready', () => console.log('Client ready and listening'));
+
 client.on('qr', qr => {
     qrcode.generate(qr, { small: true });
 });
