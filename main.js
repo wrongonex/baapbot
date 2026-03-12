@@ -1,9 +1,15 @@
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
-const { getBaapReply } = require('./Ai');
+const { getBaapReply } = require('./Ai.js'); // Make sure your Ai.js exports with module.exports
+const puppeteer = require('puppeteer');
 
 const client = new Client({
-    authStrategy: new LocalAuth()
+  authStrategy: new LocalAuth(),
+  puppeteer: {
+    headless: true,
+    executablePath: puppeteer.executablePath(), // uses bundled Chromium
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  },
 });
 
 client.on('ready', () => {
