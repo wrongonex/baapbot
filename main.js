@@ -7,9 +7,12 @@ const client = new Client({
   authStrategy: new LocalAuth(),
   puppeteer: {
     headless: true,
-    executablePath: puppeteer.executablePath(), // uses bundled Chromium
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
-  },
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage'
+    ]
+  }
 });
 
 client.on('ready', () => {
